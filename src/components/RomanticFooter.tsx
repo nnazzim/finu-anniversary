@@ -1,9 +1,11 @@
 import React from 'react';
-import { Heart, Sparkles } from 'lucide-react';
+import { Heart, Lock } from 'lucide-react';
 import { anniversaryContent } from '../data/anniversaryContent';
+import { usePhotos } from '../context/PhotoContext';
 
 export const RomanticFooter: React.FC = () => {
   const couples = anniversaryContent.couples;
+  const { setIsAdminOpen } = usePhotos();
 
   return (
     <footer className="relative py-12 px-4 bg-burgundy-950 border-t border-gold/20 text-center">
@@ -29,7 +31,19 @@ export const RomanticFooter: React.FC = () => {
 
         <div className="mt-8 pt-6 border-t border-gold/10 w-full flex flex-col sm:flex-row items-center justify-between text-[11px] text-cream/40">
           <span>{couples.anniversaryMilestone} • 21 October 2026</span>
-          <span className="mt-2 sm:mt-0">Made with ❤️ by your Kaakooka</span>
+          
+          <div className="flex items-center gap-3 mt-2 sm:mt-0">
+            <span>Made with ❤️ by your Kaakooka</span>
+            <span>•</span>
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="text-gold/70 hover:text-gold transition-colors flex items-center gap-1 font-serif underline decoration-gold/40"
+              title="Open Kaakooka's Photo Admin Panel"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Kaakooka Vault (Add Photos)</span>
+            </button>
+          </div>
         </div>
 
       </div>

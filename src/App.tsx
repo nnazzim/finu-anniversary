@@ -17,9 +17,11 @@ import { WhyILoveFinu } from './components/WhyILoveFinu';
 import { LoveQuiz } from './components/LoveQuiz';
 import { FinalCinematicSurprise } from './components/FinalCinematicSurprise';
 import { RomanticFooter } from './components/RomanticFooter';
+import { AdminPhotoModal } from './components/AdminPhotoModal';
+import { PhotoProvider } from './context/PhotoContext';
 import { triggerRomanticConfetti } from './utils/confetti';
 
-export function App() {
+function AppContent() {
   const [hasOpened, setHasOpened] = useState(false);
 
   const handleOpenSurprise = () => {
@@ -56,6 +58,9 @@ export function App() {
 
       {/* Discreet Floating Secret Message from Kaakooka */}
       <SecretMessageModal />
+
+      {/* Kaakooka's Photo Admin Panel Modal */}
+      <AdminPhotoModal />
 
       {/* Main Website Content */}
       <div className={`transition-opacity duration-1000 ${hasOpened ? 'opacity-100' : 'opacity-0'}`}>
@@ -99,6 +104,14 @@ export function App() {
         <RomanticFooter />
       </div>
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <PhotoProvider>
+      <AppContent />
+    </PhotoProvider>
   );
 }
 

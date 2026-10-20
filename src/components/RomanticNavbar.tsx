@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Menu, X } from 'lucide-react';
+import { Heart, Menu, X, Lock } from 'lucide-react';
+import { usePhotos } from '../context/PhotoContext';
 
 export const RomanticNavbar: React.FC = () => {
+  const { setIsAdminOpen } = usePhotos();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -77,6 +79,14 @@ export const RomanticNavbar: React.FC = () => {
               {link.label}
             </button>
           ))}
+          <button
+            onClick={() => setIsAdminOpen(true)}
+            className="flex items-center gap-1 text-[11px] font-serif text-gold/80 hover:text-gold px-2.5 py-1 rounded-full border border-gold/40 hover:border-gold transition-colors bg-burgundy-900/60"
+            title="Open Photo Admin Panel"
+          >
+            <Lock className="w-3 h-3 text-gold" />
+            <span>Admin 📸</span>
+          </button>
         </div>
 
         {/* Mobile menu toggle button */}
@@ -104,6 +114,16 @@ export const RomanticNavbar: React.FC = () => {
                 {link.label}
               </button>
             ))}
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsAdminOpen(true);
+              }}
+              className="text-left font-serif text-sm text-gold hover:text-amber-300 py-1.5 border-b border-gold/20 flex items-center gap-2"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Kaakooka Photo Admin 📸</span>
+            </button>
           </div>
         </div>
       )}

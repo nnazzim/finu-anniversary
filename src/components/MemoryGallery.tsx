@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, X, ChevronLeft, ChevronRight, Heart, Sparkles, Filter, Info } from 'lucide-react';
+import { Camera, X, ChevronLeft, ChevronRight, Heart, Sparkles, Filter, Info, PlusCircle } from 'lucide-react';
 import { anniversaryContent, MemoryItem } from '../data/anniversaryContent';
+import { usePhotos } from '../context/PhotoContext';
 
 export const MemoryGallery: React.FC = () => {
+  const { galleryPhotos: memories, setIsAdminOpen } = usePhotos();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const [activeCategory, setActiveCategory] = useState<string>('all');
-
-  const memories = anniversaryContent.gallery;
 
   const categories = [
     { id: 'all', label: 'All Photos (10th+)' },
@@ -70,16 +70,25 @@ export const MemoryGallery: React.FC = () => {
           </p>
 
           {/* Prominent Photo Rule Banner */}
-          <div className="max-w-xl mx-auto p-4 rounded-2xl bg-burgundy-900/70 border border-gold/30 text-xs sm:text-sm text-gold/90 flex items-center gap-3 text-left shadow-inner">
-            <Info className="w-5 h-5 text-gold shrink-0" />
-            <div>
-              <span className="font-semibold text-cream block mb-0.5">
-                Real Photographs Begin from 10th Standard
-              </span>
-              <span>
-                Early school years (2nd–9th Std) are immortalized through our timeline story & illustrations. Add your real photos to <code className="bg-burgundy-950 px-1.5 py-0.5 rounded text-blush">public/images/</code>.
-              </span>
+          <div className="max-w-xl mx-auto p-4 rounded-2xl bg-burgundy-900/70 border border-gold/30 text-xs sm:text-sm text-gold/90 flex flex-col sm:flex-row items-center justify-between gap-3 text-left shadow-inner">
+            <div className="flex items-center gap-3">
+              <Info className="w-5 h-5 text-gold shrink-0" />
+              <div>
+                <span className="font-semibold text-cream block mb-0.5">
+                  Real Photographs Begin from 10th Standard
+                </span>
+                <span>
+                  Early school years (2nd–9th Std) are immortalized through our timeline story & illustrations.
+                </span>
+              </div>
             </div>
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-wine hover:bg-wine-600 text-cream text-xs font-serif font-bold border border-gold/60 shadow-md transition-all whitespace-nowrap"
+            >
+              <PlusCircle className="w-3.5 h-3.5 text-gold" />
+              <span>Add Pictures</span>
+            </button>
           </div>
         </div>
 

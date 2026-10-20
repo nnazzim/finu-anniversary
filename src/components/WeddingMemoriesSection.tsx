@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, Heart, Sparkles, X, ChevronLeft, ChevronRight, Flower2 } from 'lucide-react';
+import { Camera, Heart, Sparkles, X, ChevronLeft, ChevronRight, Flower2, PlusCircle } from 'lucide-react';
 import { anniversaryContent } from '../data/anniversaryContent';
+import { usePhotos } from '../context/PhotoContext';
 
 export const WeddingMemoriesSection: React.FC = () => {
   const wedding = anniversaryContent.weddingsSection;
+  const { weddingPhotos: slots, setIsAdminOpen } = usePhotos();
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
@@ -39,11 +41,21 @@ export const WeddingMemoriesSection: React.FC = () => {
               <p key={idx}>{p}</p>
             ))}
           </div>
+
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => setIsAdminOpen(true)}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-wine/80 hover:bg-wine text-cream text-xs font-serif font-bold border border-gold/50 shadow-gold-glow transition-all"
+            >
+              <PlusCircle className="w-3.5 h-3.5 text-gold" />
+              <span>Add Wedding Pictures 📸</span>
+            </button>
+          </div>
         </div>
 
         {/* Wedding Photo Slots (3 Elegantly Styled Floral/Gold Frames) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {wedding.slots.map((slot, idx) => {
+          {slots.map((slot, idx) => {
             const hasError = imageErrors[slot.id];
 
             return (
@@ -147,7 +159,7 @@ export const WeddingMemoriesSection: React.FC = () => {
               {/* Prev & Next */}
               <button
                 onClick={() =>
-                  setSelectedIdx((prev) => (prev !== null ? (prev - 1 + wedding.slots.length) % wedding.slots.length : 0))
+                  setSelectedIdx((prev) => (prev !== null ? (prev - 1 + slots.length) % slots.length : 0))
                 }
                 aria-label="Previous photo"
                 className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-burgundy-900/80 text-cream hover:text-gold border border-gold/30 transition-colors z-20"
@@ -156,7 +168,7 @@ export const WeddingMemoriesSection: React.FC = () => {
               </button>
               <button
                 onClick={() =>
-                  setSelectedIdx((prev) => (prev !== null ? (prev + 1) % wedding.slots.length : 0))
+                  setSelectedIdx((prev) => (prev !== null ? (prev + 1) % slots.length : 0))
                 }
                 aria-label="Next photo"
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-burgundy-900/80 text-cream hover:text-gold border border-gold/30 transition-colors z-20"
@@ -166,11 +178,11 @@ export const WeddingMemoriesSection: React.FC = () => {
 
               {/* Image in Modal */}
               <div className="w-full max-h-[60vh] aspect-[4/5] rounded-2xl overflow-hidden bg-burgundy-900/60 border border-gold/20 flex items-center justify-center relative mb-5">
-                {!imageErrors[wedding.slots[selectedIdx].id] ? (
+                {!imageErrors[slots[selectedIdx].id] ? (
                   <img
-                    src={wedding.slots[selectedIdx].image}
-                    alt={wedding.slots[selectedIdx].caption}
-                    onError={() => handleImageError(wedding.slots[selectedIdx].id)}
+                    src={slots[selectedIdx].image}
+                    alt={slots[selectedIdx].caption}
+                    onError={() => handleImageError(slots[selectedIdx].id)}
                     className="max-h-full max-w-full object-contain rounded-xl"
                   />
                 ) : (
@@ -182,10 +194,10 @@ export const WeddingMemoriesSection: React.FC = () => {
                       {wedding.placeholderLabel}
                     </p>
                     <p className="text-xs text-blush/90 mb-3">
-                      Save your real photo at <code className="bg-wine/60 px-2 py-0.5 rounded text-gold">public{wedding.slots[selectedIdx].image}</code>
+                      Save your real photo at <code className="bg-wine/60 px-2 py-0.5 rounded text-gold">public{slots[selectedIdx].image}</code>
                     </p>
                     <span className="text-xs text-cream/60">
-                      Wedding Photo Slot #{wedding.slots[selectedIdx].id} of {wedding.slots.length}
+                      Wedding Photo Slot #{slots[selectedIdx].id} of {slots.length}
                     </span>
                   </div>
                 )}
@@ -193,10 +205,10 @@ export const WeddingMemoriesSection: React.FC = () => {
 
               {/* Caption */}
               <p className="font-serif text-xl sm:text-2xl text-cream font-medium">
-                "{wedding.slots[selectedIdx].caption}"
+                "{slots[selectedIdx].caption}"
               </p>
               <p className="text-xs text-gold/80 font-serif mt-1">
-                {wedding.slots[selectedIdx].date}
+                {slots[selectedIdx].date}
               </p>
 
             </motion.div>
