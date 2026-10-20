@@ -1,10 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { anniversaryContent, MemoryItem } from '../data/anniversaryContent';
 import {
-  savePhotoToIndexedDB,
-  getAllPhotosFromIndexedDB,
-  deletePhotoFromIndexedDB,
+  savePhotoRecord,
+  getAllPhotoRecords,
+  deletePhotoRecord,
+  clearAllPhotoRecords,
   savePhotoToServer,
+  StoredPhotoRecord,
 } from '../utils/photoStorage';
 
 export interface WeddingSlotItem {
@@ -12,30 +14,33 @@ export interface WeddingSlotItem {
   image: string;
   caption: string;
   date?: string;
+  isCustom?: boolean;
+}
+
+export interface EnhancedMemoryItem extends MemoryItem {
+  isCustom?: boolean;
 }
 
 interface PhotoContextType {
-  galleryPhotos: MemoryItem[];
+  galleryPhotos: EnhancedMemoryItem[];
   weddingPhotos: WeddingSlotItem[];
   isAdminOpen: boolean;
   setIsAdminOpen: (open: boolean) => void;
-  updateGalleryPhoto: (
-    id: number,
-    updates: Partial<MemoryItem>,
-    base64Data?: string,
-    targetFilePath?: string
-  ) => Promise<void>;
-  updateWeddingPhoto: (
-    id: number,
-    base64Data: string,
+  saveGallerySlot: (
+    slotId: number,
+    dataUrl: string,
     caption?: string,
+    date?: string,
     targetFilePath?: string
   ) => Promise<void>;
-  addNewGalleryPhoto: (
-    newPhoto: Omit<MemoryItem, 'id'>,
-    base64Data: string,
+  saveWeddingSlot: (
+    slotId: number,
+    dataUrl: string,
+    caption?: string,
+    date?: string,
     targetFilePath?: string
   ) => Promise<void>;
+  removeSlotPhoto: (type: 'gallery' | 'wedding', slotId: number) => Promise<void>;
   resetToDefaults: () => Promise<void>;
   loading: boolean;
 }
@@ -43,152 +48,197 @@ interface PhotoContextType {
 const PhotoContext = createContext<PhotoContextType | undefined>(undefined);
 
 export const PhotoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [galleryPhotos, setGalleryPhotos] = useState<MemoryItem[]>(anniversaryContent.gallery);
-  const [weddingPhotos, setWeddingPhotos] = useState<WeddingSlotItem[]>(
-    anniversaryContent.weddingsSection.slots
+  const [galleryPhotos, setGalleryPhotos] = useState<EnhancedMemoryItem[]>(() =>
+    anniversaryContent.gallery.map((g) => ({ ...g, isCustom: false }))
+  );
+  const [weddingPhotos, setWeddingPhotos] = useState<WeddingSlotItem[]>(() =>
+    anniversaryContent.weddingsSection.slots.map((w) => ({ ...w, isCustom: false }))
   );
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Load photos from IndexedDB & localStorage on mount
-  useEffect(() => {
-    const loadStoredData = async () => {
-      try {
-        const storedImages = await getAllPhotosFromIndexedDB();
-        const savedMeta = localStorage.getItem('finu_gallery_meta');
-        const savedWeddingMeta = localStorage.getItem('finu_wedding_meta');
+  // Load all custom photo records from IndexedDB on startup
+  const loadFromStorage = useCallback(async () => {
+    try {
+      const records = await getAllPhotoRecords();
 
-        let baseGallery = anniversaryContent.gallery;
-        if (savedMeta) {
-          try {
-            baseGallery = JSON.parse(savedMeta);
-          } catch (e) {
-            console.error(e);
+      // Merge Gallery Photos (each slot is checked individually)
+      setGalleryPhotos((prev) =>
+        anniversaryContent.gallery.map((defaultItem) => {
+          const key = `gallery_${defaultItem.id}`;
+          const customRecord = records[key];
+          if (customRecord && customRecord.dataUrl) {
+            return {
+              ...defaultItem,
+              image: customRecord.dataUrl,
+              caption: customRecord.caption || defaultItem.caption,
+              date: customRecord.date || defaultItem.date,
+              isCustom: true,
+            };
           }
-        }
+          return { ...defaultItem, isCustom: false };
+        })
+      );
 
-        // Merge custom images
-        const mergedGallery = baseGallery.map((item) => {
-          const customImg = storedImages[`gallery_${item.id}`];
-          return customImg ? { ...item, image: customImg } : item;
-        });
-        setGalleryPhotos(mergedGallery);
-
-        let baseWeddings = anniversaryContent.weddingsSection.slots;
-        if (savedWeddingMeta) {
-          try {
-            baseWeddings = JSON.parse(savedWeddingMeta);
-          } catch (e) {
-            console.error(e);
+      // Merge Wedding Photos (each slot is checked individually)
+      setWeddingPhotos((prev) =>
+        anniversaryContent.weddingsSection.slots.map((defaultSlot) => {
+          const key = `wedding_${defaultSlot.id}`;
+          const customRecord = records[key];
+          if (customRecord && customRecord.dataUrl) {
+            return {
+              ...defaultSlot,
+              image: customRecord.dataUrl,
+              caption: customRecord.caption || defaultSlot.caption,
+              date: customRecord.date || defaultSlot.date,
+              isCustom: true,
+            };
           }
-        }
-
-        const mergedWeddings = baseWeddings.map((slot) => {
-          const customImg = storedImages[`wedding_${slot.id}`];
-          return customImg ? { ...slot, image: customImg } : slot;
-        });
-        setWeddingPhotos(mergedWeddings);
-      } catch (err) {
-        console.error('Failed to load stored photos', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadStoredData();
+          return { ...defaultSlot, isCustom: false };
+        })
+      );
+    } catch (err) {
+      console.error('Error loading stored photos from IndexedDB:', err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const updateGalleryPhoto = async (
-    id: number,
-    updates: Partial<MemoryItem>,
-    base64Data?: string,
-    targetFilePath?: string
-  ) => {
-    let updatedImage = updates.image;
+  useEffect(() => {
+    loadFromStorage();
+  }, [loadFromStorage]);
 
-    if (base64Data) {
-      await savePhotoToIndexedDB(`gallery_${id}`, base64Data);
-      updatedImage = base64Data;
-
-      if (targetFilePath) {
-        await savePhotoToServer(targetFilePath, base64Data);
-      }
-    }
-
-    setGalleryPhotos((prev) => {
-      const updated = prev.map((item) =>
-        item.id === id ? { ...item, ...updates, ...(updatedImage ? { image: updatedImage } : {}) } : item
-      );
-      localStorage.setItem('finu_gallery_meta', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const updateWeddingPhoto = async (
-    id: number,
-    base64Data: string,
+  /**
+   * Save a single Gallery Slot independently
+   */
+  const saveGallerySlot = async (
+    slotId: number,
+    dataUrl: string,
     caption?: string,
+    date?: string,
     targetFilePath?: string
   ) => {
-    await savePhotoToIndexedDB(`wedding_${id}`, base64Data);
+    const key = `gallery_${slotId}`;
+    const targetItem = anniversaryContent.gallery.find((g) => g.id === slotId);
 
-    if (targetFilePath) {
-      await savePhotoToServer(targetFilePath, base64Data);
-    }
-
-    setWeddingPhotos((prev) => {
-      const updated = prev.map((slot) =>
-        slot.id === id
-          ? {
-              ...slot,
-              image: base64Data,
-              ...(caption ? { caption } : {}),
-            }
-          : slot
-      );
-      localStorage.setItem('finu_wedding_meta', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const addNewGalleryPhoto = async (
-    newPhoto: Omit<MemoryItem, 'id'>,
-    base64Data: string,
-    targetFilePath?: string
-  ) => {
-    const nextId =
-      galleryPhotos.length > 0 ? Math.max(...galleryPhotos.map((p) => p.id)) + 1 : 1;
-
-    await savePhotoToIndexedDB(`gallery_${nextId}`, base64Data);
-
-    if (targetFilePath) {
-      await savePhotoToServer(targetFilePath, base64Data);
-    }
-
-    const created: MemoryItem = {
-      ...newPhoto,
-      id: nextId,
-      image: base64Data,
+    const record: StoredPhotoRecord = {
+      key,
+      dataUrl,
+      caption: caption || targetItem?.caption,
+      date: date || targetItem?.date,
+      category: targetItem?.category,
+      stageLabel: targetItem?.stageLabel,
+      updatedAt: Date.now(),
     };
 
-    setGalleryPhotos((prev) => {
-      const updated = [...prev, created];
-      localStorage.setItem('finu_gallery_meta', JSON.stringify(updated));
-      return updated;
-    });
+    // 1. Save independently to IndexedDB
+    await savePhotoRecord(record);
+
+    // 2. Save to local disk via Vite dev server if available
+    if (targetFilePath) {
+      await savePhotoToServer(targetFilePath, dataUrl);
+    }
+
+    // 3. Update only that exact slot in React state
+    setGalleryPhotos((prev) =>
+      prev.map((item) =>
+        item.id === slotId
+          ? {
+              ...item,
+              image: dataUrl,
+              ...(caption ? { caption } : {}),
+              ...(date ? { date } : {}),
+              isCustom: true,
+            }
+          : item
+      )
+    );
   };
 
+  /**
+   * Save a single Wedding Slot independently
+   */
+  const saveWeddingSlot = async (
+    slotId: number,
+    dataUrl: string,
+    caption?: string,
+    date?: string,
+    targetFilePath?: string
+  ) => {
+    const key = `wedding_${slotId}`;
+    const targetSlot = anniversaryContent.weddingsSection.slots.find((w) => w.id === slotId);
+
+    const record: StoredPhotoRecord = {
+      key,
+      dataUrl,
+      caption: caption || targetSlot?.caption,
+      date: date || targetSlot?.date,
+      updatedAt: Date.now(),
+    };
+
+    // 1. Save independently to IndexedDB
+    await savePhotoRecord(record);
+
+    // 2. Save to local disk via Vite dev server if available
+    if (targetFilePath) {
+      await savePhotoToServer(targetFilePath, dataUrl);
+    }
+
+    // 3. Update only that exact wedding frame in React state
+    setWeddingPhotos((prev) =>
+      prev.map((slot) =>
+        slot.id === slotId
+          ? {
+              ...slot,
+              image: dataUrl,
+              ...(caption ? { caption } : {}),
+              ...(date ? { date } : {}),
+              isCustom: true,
+            }
+          : slot
+      )
+    );
+  };
+
+  /**
+   * Revert a single slot back to default placeholder without touching any other slot
+   */
+  const removeSlotPhoto = async (type: 'gallery' | 'wedding', slotId: number) => {
+    const key = `${type}_${slotId}`;
+    await deletePhotoRecord(key);
+
+    if (type === 'gallery') {
+      const defaultItem = anniversaryContent.gallery.find((g) => g.id === slotId);
+      if (defaultItem) {
+        setGalleryPhotos((prev) =>
+          prev.map((item) =>
+            item.id === slotId ? { ...defaultItem, isCustom: false } : item
+          )
+        );
+      }
+    } else {
+      const defaultSlot = anniversaryContent.weddingsSection.slots.find((w) => w.id === slotId);
+      if (defaultSlot) {
+        setWeddingPhotos((prev) =>
+          prev.map((slot) =>
+            slot.id === slotId ? { ...defaultSlot, isCustom: false } : slot
+          )
+        );
+      }
+    }
+  };
+
+  /**
+   * Reset all slots to default
+   */
   const resetToDefaults = async () => {
-    galleryPhotos.forEach((item) => {
-      deletePhotoFromIndexedDB(`gallery_${item.id}`);
-    });
-    weddingPhotos.forEach((slot) => {
-      deletePhotoFromIndexedDB(`wedding_${slot.id}`);
-    });
-    localStorage.removeItem('finu_gallery_meta');
-    localStorage.removeItem('finu_wedding_meta');
-    setGalleryPhotos(anniversaryContent.gallery);
-    setWeddingPhotos(anniversaryContent.weddingsSection.slots);
+    await clearAllPhotoRecords();
+    setGalleryPhotos(
+      anniversaryContent.gallery.map((g) => ({ ...g, isCustom: false }))
+    );
+    setWeddingPhotos(
+      anniversaryContent.weddingsSection.slots.map((w) => ({ ...w, isCustom: false }))
+    );
   };
 
   return (
@@ -198,9 +248,9 @@ export const PhotoProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         weddingPhotos,
         isAdminOpen,
         setIsAdminOpen,
-        updateGalleryPhoto,
-        updateWeddingPhoto,
-        addNewGalleryPhoto,
+        saveGallerySlot,
+        saveWeddingSlot,
+        removeSlotPhoto,
         resetToDefaults,
         loading,
       }}
