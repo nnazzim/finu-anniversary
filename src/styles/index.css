@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #140309;
+    color: #FFF5EA;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #781D36;
+    color: #FFF5EA;
+  }
+}
+
+/* Custom romantic scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A040B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #781D36;
+  border-radius: 9999px;
+  border: 1px solid #D6B16D40;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B03053;
+}
+
+/* Lined notebook paper background for 2nd standard nostalgia */
+.notebook-paper {
+  background-color: #FFF9F0;
+  background-image: 
+    linear-gradient(90deg, transparent 49px, #E89EB340 49px, #E89EB340 51px, transparent 51px),
+    linear-gradient(#E5D5C5 1px, transparent 1px);
+  background-size: 100% 100%, 100% 28px;
+  background-position: 0 0, 0 20px;
+}
+
+/* Scrapbook tape detail */
+.scrapbook-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 90px;
+  height: 24px;
+  background-color: rgba(244, 185, 202, 0.45);
+  backdrop-filter: blur(2px);
+  border-left: 2px dashed rgba(214, 177, 109, 0.4);
+  border-right: 2px dashed rgba(214, 177, 109, 0.4);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Gold foil shimmer */
+.gold-shimmer {
+  background: linear-gradient(
+    135deg,
+    #D6B16D 0%,
+    #FFF5EA 35%,
+    #D6B16D 70%,
+    #B08C4A 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Romantic glow text */
+.text-glow {
+  text-shadow: 0 0 25px rgba(244, 185, 202, 0.45), 0 0 50px rgba(120, 29, 54, 0.3);
+}
+
+.text-gold-glow {
+  text-shadow: 0 0 20px rgba(214, 177, 109, 0.5);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
