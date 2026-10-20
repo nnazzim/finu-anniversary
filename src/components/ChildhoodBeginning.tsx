@@ -81,31 +81,30 @@ export const ChildhoodBeginning: React.FC = () => {
               </div>
             </div>
 
-            {/* Illustrated Classroom Scene Card (NOT a fake photo, clearly an artistic keepsake) */}
+            {/* Illustrated Classroom Scene Card */}
             <div className="md:col-span-5 flex justify-center">
               <motion.div
                 whileHover={{ rotate: 1, scale: 1.02 }}
-                className="w-full max-w-[280px] bg-white p-4 pt-4 pb-6 rounded-lg shadow-xl border border-stone-200 rotate-2 flex flex-col items-center"
+                className="w-full max-w-[300px] bg-white p-3.5 pt-3.5 pb-6 rounded-2xl shadow-2xl border border-stone-200 rotate-2 flex flex-col items-center"
               >
-                {/* Illustrated Scene area */}
-                <div className="w-full aspect-[4/5] bg-gradient-to-tr from-amber-50 via-blush-50 to-orange-50 rounded border-2 border-dashed border-amber-700/30 flex flex-col items-center justify-center p-4 text-center group relative overflow-hidden">
-                  <div className="w-14 h-14 rounded-full bg-wine/15 flex items-center justify-center mb-3 border border-wine/30">
-                    <BookOpen className="w-7 h-7 text-wine" />
+                {/* Illustrated Scene area with the real Munduparamba School art */}
+                <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-amber-50 border border-stone-200 relative shadow-inner group">
+                  <img
+                    src="/images/school/munduparamba.jpg"
+                    alt="Munduparamba School - 2nd Standard Classroom"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-burgundy-950/85 text-[10px] text-gold font-serif border border-gold/40 shadow-sm">
+                    2nd Standard • AMUP
                   </div>
-                  <p className="font-serif font-bold text-wine text-sm">
-                    {content.photoPlaceholderTitle}
-                  </p>
-                  <p className="text-xs text-stone-600 mt-1 leading-snug">
-                    Illustrated Classroom Scene
-                  </p>
-                  <span className="mt-3 text-[10px] text-amber-800 font-sans uppercase tracking-wider bg-amber-100/90 px-2 py-0.5 rounded border border-amber-300">
-                    Childhood Keepsake • No Real Photos (2nd–9th Std)
-                  </span>
                 </div>
 
                 {/* Polaroid Caption */}
-                <p className="font-script text-2xl text-slate-800 mt-4 text-center">
+                <p className="font-script text-2xl text-slate-800 mt-3 text-center">
                   Munduparamba School ❤️
+                </p>
+                <p className="text-[11px] text-stone-500 font-sans text-center mt-0.5">
+                  Two little desks, one forever story
                 </p>
               </motion.div>
             </div>

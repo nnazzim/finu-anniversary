@@ -29,6 +29,19 @@ export const MemoryGallery: React.FC = () => {
     setImageErrors((prev) => ({ ...prev, [id]: true }));
   };
 
+  // Clear error state whenever memories change or have custom pictures
+  useEffect(() => {
+    setImageErrors((prev) => {
+      const next = { ...prev };
+      memories.forEach((m) => {
+        if (m.isCustom || (typeof m.image === 'string' && m.image.startsWith('data:'))) {
+          delete next[m.id];
+        }
+      });
+      return next;
+    });
+  }, [memories]);
+
   // Keyboard navigation for lightbox
   useEffect(() => {
     if (selectedIdx === null) return;
@@ -115,7 +128,8 @@ export const MemoryGallery: React.FC = () => {
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
           {filteredMemories.map((item, idx) => {
-            const hasError = imageErrors[item.id];
+            const isCustom = Boolean(item.isCustom || (typeof item.image === 'string' && item.image.startsWith('data:')));
+            const hasError = !isCustom && Boolean(imageErrors[item.id]);
             const rotations = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', '-rotate-3', 'rotate-3'];
             const rotClass = rotations[idx % rotations.length];
 
@@ -139,7 +153,9 @@ export const MemoryGallery: React.FC = () => {
                     <img
                       src={item.image}
                       alt={item.caption}
-                      onError={() => handleImageError(item.id)}
+                      onError={() => {
+                        if (!isCustom) handleImageError(item.id);
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : null}
@@ -245,11 +261,15 @@ export const MemoryGallery: React.FC = () => {
 
               {/* Memory Image in Lightbox */}
               <div className="w-full max-h-[60vh] aspect-[4/3] rounded-2xl overflow-hidden bg-burgundy-900/60 border border-gold/20 flex items-center justify-center relative mb-5">
-                {!imageErrors[filteredMemories[selectedIdx].id] ? (
+                {(!imageErrors[filteredMemories[selectedIdx].id] || filteredMemories[selectedIdx].isCustom || (typeof filteredMemories[selectedIdx].image === 'string' && filteredMemories[selectedIdx].image.startsWith('data:'))) ? (
                   <img
                     src={filteredMemories[selectedIdx].image}
                     alt={filteredMemories[selectedIdx].caption}
-                    onError={() => handleImageError(filteredMemories[selectedIdx].id)}
+                    onError={() => {
+                      if (!filteredMemories[selectedIdx].isCustom && !filteredMemories[selectedIdx].image.startsWith('data:')) {
+                        handleImageError(filteredMemories[selectedIdx].id);
+                      }
+                    }}
                     className="max-h-full max-w-full object-contain rounded-xl"
                   />
                 ) : (

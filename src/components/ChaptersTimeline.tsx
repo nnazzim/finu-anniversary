@@ -16,6 +16,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import { anniversaryContent, TimelineChapter } from '../data/anniversaryContent';
+import { usePhotos } from '../context/PhotoContext';
 
 const stageBadges: Record<string, { label: string; color: string }> = {
   childhood: { label: "Childhood • 2nd–7th Std", color: "bg-amber-900/60 text-amber-200 border-amber-600/40" },
@@ -27,6 +28,24 @@ const stageBadges: Record<string, { label: string; color: string }> = {
 
 export const ChaptersTimeline: React.FC = () => {
   const chapters = anniversaryContent.chapters;
+  const { galleryPhotos, weddingPhotos } = usePhotos();
+
+  // Helper to find matching custom photo for a chapter
+  const getChapterPhoto = (chNum: number) => {
+    if (chNum === 6) {
+      return galleryPhotos.find((p) => p.category === 'class-10' && (p.isCustom || (typeof p.image === 'string' && p.image.startsWith('data:'))));
+    }
+    if (chNum === 7) {
+      return galleryPhotos.find((p) => (p.category === 'class-11' || p.category === 'class-12') && (p.isCustom || (typeof p.image === 'string' && p.image.startsWith('data:'))));
+    }
+    if (chNum === 8 || chNum === 9) {
+      return galleryPhotos.find((p) => p.category === 'college' && (p.isCustom || (typeof p.image === 'string' && p.image.startsWith('data:'))));
+    }
+    if (chNum === 10) {
+      return weddingPhotos.find((w) => w.isCustom || (typeof w.image === 'string' && w.image.startsWith('data:')));
+    }
+    return null;
+  };
 
   return (
     <section id="chapters" className="relative py-28 px-4 overflow-hidden">

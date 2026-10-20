@@ -10,6 +10,19 @@ export const WeddingMemoriesSection: React.FC = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
+  // Clear error state whenever slots update or have custom pictures
+  React.useEffect(() => {
+    setImageErrors((prev) => {
+      const next = { ...prev };
+      slots.forEach((s) => {
+        if (s.isCustom || (typeof s.image === 'string' && s.image.startsWith('data:'))) {
+          delete next[s.id];
+        }
+      });
+      return next;
+    });
+  }, [slots]);
+
   const handleImageError = (id: number) => {
     setImageErrors((prev) => ({ ...prev, [id]: true }));
   };
@@ -56,7 +69,8 @@ export const WeddingMemoriesSection: React.FC = () => {
         {/* Wedding Photo Slots (3 Elegantly Styled Floral/Gold Frames) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {slots.map((slot, idx) => {
-            const hasError = imageErrors[slot.id];
+            const isCustom = Boolean(slot.isCustom || (typeof slot.image === 'string' && slot.image.startsWith('data:')));
+            const hasError = !isCustom && Boolean(imageErrors[slot.id]);
 
             return (
               <motion.div
@@ -81,7 +95,9 @@ export const WeddingMemoriesSection: React.FC = () => {
                     <img
                       src={slot.image}
                       alt={slot.caption}
-                      onError={() => handleImageError(slot.id)}
+                      onError={() => {
+                        if (!isCustom) handleImageError(slot.id);
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : null}
@@ -178,11 +194,15 @@ export const WeddingMemoriesSection: React.FC = () => {
 
               {/* Image in Modal */}
               <div className="w-full max-h-[60vh] aspect-[4/5] rounded-2xl overflow-hidden bg-burgundy-900/60 border border-gold/20 flex items-center justify-center relative mb-5">
-                {!imageErrors[slots[selectedIdx].id] ? (
+                {(!imageErrors[slots[selectedIdx].id] || slots[selectedIdx].isCustom || (typeof slots[selectedIdx].image === 'string' && slots[selectedIdx].image.startsWith('data:'))) ? (
                   <img
                     src={slots[selectedIdx].image}
                     alt={slots[selectedIdx].caption}
-                    onError={() => handleImageError(slots[selectedIdx].id)}
+                    onError={() => {
+                      if (!slots[selectedIdx].isCustom && !slots[selectedIdx].image.startsWith('data:')) {
+                        handleImageError(slots[selectedIdx].id);
+                      }
+                    }}
                     className="max-h-full max-w-full object-contain rounded-xl"
                   />
                 ) : (
