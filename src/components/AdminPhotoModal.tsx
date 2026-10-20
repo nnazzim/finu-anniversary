@@ -158,6 +158,13 @@ export const AdminPhotoModal: React.FC = () => {
     setActiveTab('upload');
   };
 
+  const handleClose = () => {
+    setIsAdminOpen(false);
+    if (window.location.hash.toLowerCase().includes('admin') || window.location.search.includes('admin')) {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  };
+
   if (!isAdminOpen) return null;
 
   return (
@@ -170,7 +177,7 @@ export const AdminPhotoModal: React.FC = () => {
       >
         {/* Close Button */}
         <button
-          onClick={() => setIsAdminOpen(false)}
+          onClick={handleClose}
           className="absolute top-5 right-5 p-2 rounded-full bg-burgundy-900 text-cream/70 hover:text-gold border border-gold/30 transition-colors"
           aria-label="Close admin panel"
         >

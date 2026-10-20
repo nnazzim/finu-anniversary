@@ -18,11 +18,29 @@ import { LoveQuiz } from './components/LoveQuiz';
 import { FinalCinematicSurprise } from './components/FinalCinematicSurprise';
 import { RomanticFooter } from './components/RomanticFooter';
 import { AdminPhotoModal } from './components/AdminPhotoModal';
-import { PhotoProvider } from './context/PhotoContext';
+import { PhotoProvider, usePhotos } from './context/PhotoContext';
 import { triggerRomanticConfetti } from './utils/confetti';
 
 function AppContent() {
   const [hasOpened, setHasOpened] = useState(false);
+  const { setIsAdminOpen } = usePhotos();
+
+  // Automatically open Admin Panel if URL contains #admin, ?admin, or /admin
+  React.useEffect(() => {
+    const checkAdminUrl = () => {
+      const isParam = window.location.search.includes('admin');
+      const isHash = window.location.hash.toLowerCase().includes('admin');
+      const isPath = window.location.pathname === '/admin';
+      if (isParam || isHash || isPath) {
+        setHasOpened(true);
+        setIsAdminOpen(true);
+      }
+    };
+
+    checkAdminUrl();
+    window.addEventListener('hashchange', checkAdminUrl);
+    return () => window.removeEventListener('hashchange', checkAdminUrl);
+  }, [setIsAdminOpen]);
 
   const handleOpenSurprise = () => {
     setHasOpened(true);
