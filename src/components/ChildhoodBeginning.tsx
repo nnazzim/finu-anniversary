@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Heart, Camera, Bookmark, Pencil } from 'lucide-react';
+import { Heart, Bookmark, Pencil, BookOpen, Sparkles } from 'lucide-react';
 import { anniversaryContent } from '../data/anniversaryContent';
 
 export const ChildhoodBeginning: React.FC = () => {
@@ -69,6 +69,11 @@ export const ChildhoodBeginning: React.FC = () => {
                 </div>
               </div>
 
+              {/* Emotional Quote from prompt */}
+              <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-800/20 text-stone-800 font-serif text-base italic leading-relaxed">
+                "{content.emotionalQuote}"
+              </div>
+
               {/* Cute handwritten doodle note */}
               <div className="pt-2 flex items-center gap-2 text-wine/75 font-script text-xl sm:text-2xl">
                 <Pencil className="w-4 h-4 text-wine shrink-0" />
@@ -76,31 +81,31 @@ export const ChildhoodBeginning: React.FC = () => {
               </div>
             </div>
 
-            {/* Polaroid Photo Placeholder */}
+            {/* Illustrated Classroom Scene Card (NOT a fake photo, clearly an artistic keepsake) */}
             <div className="md:col-span-5 flex justify-center">
               <motion.div
                 whileHover={{ rotate: 1, scale: 1.02 }}
                 className="w-full max-w-[280px] bg-white p-4 pt-4 pb-6 rounded-lg shadow-xl border border-stone-200 rotate-2 flex flex-col items-center"
               >
-                {/* Photo frame area */}
-                <div className="w-full aspect-[4/5] bg-gradient-to-tr from-stone-100 via-blush-50 to-stone-50 rounded border border-dashed border-stone-300 flex flex-col items-center justify-center p-4 text-center group cursor-pointer relative overflow-hidden">
-                  <div className="w-14 h-14 rounded-full bg-blush/30 flex items-center justify-center mb-3">
-                    <Camera className="w-7 h-7 text-wine/70" />
+                {/* Illustrated Scene area */}
+                <div className="w-full aspect-[4/5] bg-gradient-to-tr from-amber-50 via-blush-50 to-orange-50 rounded border-2 border-dashed border-amber-700/30 flex flex-col items-center justify-center p-4 text-center group relative overflow-hidden">
+                  <div className="w-14 h-14 rounded-full bg-wine/15 flex items-center justify-center mb-3 border border-wine/30">
+                    <BookOpen className="w-7 h-7 text-wine" />
                   </div>
-                  <p className="font-serif font-semibold text-wine text-sm">
+                  <p className="font-serif font-bold text-wine text-sm">
                     {content.photoPlaceholderTitle}
                   </p>
-                  <p className="text-xs text-stone-500 mt-1">
-                    {content.photoPlaceholderSub}
+                  <p className="text-xs text-stone-600 mt-1 leading-snug">
+                    Illustrated Classroom Scene
                   </p>
-                  <span className="mt-3 text-[10px] text-stone-400 font-mono uppercase tracking-wider bg-stone-100 px-2 py-0.5 rounded">
-                    Photo Placeholder
+                  <span className="mt-3 text-[10px] text-amber-800 font-sans uppercase tracking-wider bg-amber-100/90 px-2 py-0.5 rounded border border-amber-300">
+                    Childhood Keepsake • No Real Photos (2nd–9th Std)
                   </span>
                 </div>
 
                 {/* Polaroid Caption */}
                 <p className="font-script text-2xl text-slate-800 mt-4 text-center">
-                  2nd Standard Memories ❤️
+                  Munduparamba School ❤️
                 </p>
               </motion.div>
             </div>

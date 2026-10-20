@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Sparkles, Menu, X } from 'lucide-react';
-import { anniversaryContent } from '../data/anniversaryContent';
+import { Heart, Menu, X } from 'lucide-react';
 
 export const RomanticNavbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -17,8 +16,10 @@ export const RomanticNavbar: React.FC = () => {
   const navLinks = [
     { label: "Our Beginning", href: "#beginning" },
     { label: "21 Oct 2019", href: "#said-yes" },
-    { label: "7 Chapters", href: "#chapters" },
-    { label: "Memories", href: "#gallery" },
+    { label: "12 Chapters", href: "#chapters" },
+    { label: "Colleges & Roads", href: "#colleges-and-distance" },
+    { label: "Friends' Weddings", href: "#wedding-memories" },
+    { label: "Photos (10th+)", href: "#gallery" },
     { label: "Love Letter", href: "#letter" },
     { label: "Reasons", href: "#why-i-love" },
     { label: "Love Quiz", href: "#quiz" },
@@ -37,7 +38,7 @@ export const RomanticNavbar: React.FC = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'bg-burgundy-950/90 backdrop-blur-md border-b border-gold/20 py-3 shadow-romantic'
+          ? 'bg-burgundy-950/95 backdrop-blur-md border-b border-gold/20 py-3 shadow-romantic'
           : 'bg-transparent py-5'
       }`}
     >
@@ -66,12 +67,12 @@ export const RomanticNavbar: React.FC = () => {
         </a>
 
         {/* Desktop Nav Links */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden xl:flex items-center gap-4">
           {navLinks.map((link) => (
             <button
               key={link.href}
               onClick={() => handleLinkClick(link.href)}
-              className="text-xs uppercase font-serif tracking-wider text-cream/80 hover:text-gold transition-colors"
+              className="text-[11px] uppercase font-serif tracking-wider text-cream/80 hover:text-gold transition-colors"
             >
               {link.label}
             </button>
@@ -79,7 +80,7 @@ export const RomanticNavbar: React.FC = () => {
         </div>
 
         {/* Mobile menu toggle button */}
-        <div className="lg:hidden">
+        <div className="xl:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
@@ -92,13 +93,13 @@ export const RomanticNavbar: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-burgundy-950/95 border-b border-gold/30 px-6 py-5 backdrop-blur-xl">
-          <div className="flex flex-col gap-4">
+        <div className="xl:hidden bg-burgundy-950/95 border-b border-gold/30 px-6 py-5 backdrop-blur-xl max-h-[80vh] overflow-y-auto">
+          <div className="flex flex-col gap-3">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleLinkClick(link.href)}
-                className="text-left font-serif text-base text-cream/90 hover:text-gold py-1 border-b border-gold/10"
+                className="text-left font-serif text-sm text-cream/90 hover:text-gold py-1.5 border-b border-gold/10"
               >
                 {link.label}
               </button>

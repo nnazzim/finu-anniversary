@@ -3,30 +3,35 @@
  *  FINU ❤️ — OUR STORY, OUR FOREVER (CENTRAL PERSONALIZATION FILE)
  * =======================================================================
  * 
- * Hi Nasim (Kaakooka)!
- * Everything on your anniversary website can be customized right here.
- * You can edit texts, love letters, quiz questions, memories, dates,
- * and photo paths without touching any component code.
- * 
- * Simply update any field below and save this file!
+ * Primary Source: "Cute Cadence" & Our Real Love Journey
+ * From AMUP Munduparamba School to DUHSS Panakkad,
+ * College days at Farook & Govt College Malappuram,
+ * and 7 years of saying yes (21 October 2019 — 21 October 2026).
  */
 
 export interface MemoryItem {
   id: number;
   image: string;
   caption: string;
+  category: 'class-10' | 'class-11' | 'class-12' | 'college' | 'weddings' | 'other';
+  stageLabel: string;
   date?: string;
-  aspect?: 'square' | 'portrait' | 'landscape';
+  description?: string;
+  isRealPhoto: boolean; // false for childhood illustrations, true for real photo slots (10th standard onwards)
 }
 
 export interface TimelineChapter {
   id: number;
   chapterNumber: number;
   title: string;
-  date?: string;
-  description: string;
-  image?: string;
-  tag?: string;
+  period: string;
+  schoolStage: 'childhood' | 'school' | 'higher-secondary' | 'college' | 'today';
+  headlineQuote: string;
+  narrative: string[];
+  emotionalText: string;
+  imageType: 'illustration' | 'scrapbook' | 'autograph' | 'talent' | 'milestone' | 'photo-placeholder';
+  photoSlot?: string;
+  tag: string;
 }
 
 export interface QuizQuestion {
@@ -55,9 +60,14 @@ export const anniversaryContent = {
     hisNickname: "Kaakooka",
     herName: "Hafna Sherin",
     herNickname: "Finu",
+    primarySchool: "AMUP Munduparamba School",
+    highSchool: "MMET High School",
+    higherSecondarySchool: "DUHSS Panakkad",
+    hisCollege: "Farook College",
+    herCollege: "Government College, Malappuram",
     proposalGrade: "2nd Standard",
-    acceptanceGrade: "8th Standard",
     acceptanceDate: "21 October 2019",
+    acceptanceGrade: "8th Standard",
     anniversaryDate: "21 October 2026",
     anniversaryMilestone: "7th Love Anniversary",
     yearsCount: 7,
@@ -86,40 +96,48 @@ export const anniversaryContent = {
       "From a little boy who proposed in 2nd standard to your Kaakooka today... my heart still chooses you.",
     ctaButton: "Take Me Through Our Story ↓",
     stats: [
+      { label: "Official Anniversary", value: "21 Oct 2019" },
       { label: "Years of Saying Yes", value: "7 Years" },
-      { label: "Since Childhood Proposal", value: "Since 2nd Std" },
-      { label: "Times Heart Chose You", value: "Every Single Day" },
+      { label: "Since Childhood Spark", value: "Since 2nd Std" },
     ],
   },
 
   // ---------------------------------------------------------------------
-  // 4. OUR UNBELIEVABLE BEGINNING — 2ND STANDARD
+  // 4. OUR UNBELIEVABLE BEGINNING — 2ND STANDARD (FEATURED SPOTLIGHT)
   // ---------------------------------------------------------------------
   beginning: {
-    tag: "Where It All Began • Innocent & Pure",
+    tag: "AMUP Munduparamba School • Where Our Story Began",
     heading: "Can You Believe Where It All Started? 🥹",
     paragraphs: [
-      "Once upon a time, there was a little boy in 2nd standard who somehow found the courage to propose to a girl who would one day become his whole world.",
-      "Maybe we were too young to understand what forever meant back then. But look at us now... a little childhood story became one of the most precious chapters of my life.",
+      "Fate seemed to weave our paths together from the very start, finding ourselves in the same classroom from 1st standard at AMUP Munduparamba School.",
+      "In 2nd standard, our connection deepened when our teacher grouped us together. Hafna's remarkable talent made our team victorious in every class competition, and little Nasim couldn't help but be captivated by her charm.",
+      "As admiration grew, he started bringing sweets to express his feelings. Despite that innocent young proposal, Hafna, unaware of love, remained uninterested — but undeterred, Nasim held her in his heart.",
     ],
     highlightLine: "I was just a little boy when I chose you, Finu. ❤️",
-    noteDoodle: "Written with a school pencil, sealed in my heart forever.",
-    photoPlaceholderTitle: "Our Little Childhood Story 📸",
-    photoPlaceholderSub: "A sweet memory from our school days",
+    emotionalQuote: "Before I knew what forever meant, my little heart had already found someone special. That little girl was you, Finu. And that little boy was me.",
+    noteDoodle: "Lined notebook memories, team victories & pencil doodles.",
+    photoPlaceholderTitle: "AMUP Munduparamba Days 🎨",
+    photoPlaceholderSub: "Childhood Illustrated Memory (No Real Photos 2nd–9th Std)",
   },
 
   // ---------------------------------------------------------------------
-  // 5. THE DAY FINU SAID YES — 21 OCTOBER 2019
+  // 5. THE DAY FINU SAID YES — 21 OCTOBER 2019 (THE TURNING POINT)
   // ---------------------------------------------------------------------
   theYesDay: {
-    tag: "The Milestone That Changed Everything",
+    tag: "The Milestone That Changed Our Story Forever",
     heading: "AND THEN... YOU SAID YES. ❤️",
     date: "21 OCTOBER 2019",
-    gradeBadge: "8th Standard",
+    gradeBadge: "8th Standard • MMET",
     descriptionLines: [
       "8th standard. October 21st, 2019.",
-      "The day you accepted my love.",
-      "I don't know if the little boy I was could have imagined how much this date would mean to the man I am becoming. But I know this: that day became a memory I will always carry in my heart.",
+      "The day my Finu accepted my love.",
+      "One day, navigating the challenges of 8th standard together, Hafna gathered the courage to send Nasim a thoughtful text: she asked if he was mad because she had consistently rejected his proposals. Nasim, pouring his genuine emotions into words, expressed that he wasn't mad at all, but rather saddened by the continuous rejections.",
+      "To his joyful surprise, Hafna responded with newfound understanding and warmth, acknowledging his enduring feelings and finally saying YES. That moment became the highlight of your Kaakooka's life.",
+    ],
+    emotionalQuotes: [
+      "I had waited, hoped, and held on to my feelings. Then came the day that changed our story forever.",
+      "From that day, I wasn't just the boy who loved you. I became the boy whose love you accepted.",
+      "Happy 7th love anniversary, Finu. Your Kaakooka still remembers.",
     ],
     milestoneCard:
       "One little question. One beautiful YES. A story that is still being written.",
@@ -127,176 +145,427 @@ export const anniversaryContent = {
   },
 
   // ---------------------------------------------------------------------
-  // 6. SEVEN CHAPTERS OF OUR LOVE (VERTICAL TIMELINE)
+  // 6. REORGANIZED 12-CHAPTER CHRONOLOGICAL LOVE TIMELINE
   // ---------------------------------------------------------------------
   chapters: [
     {
       id: 1,
       chapterNumber: 1,
-      title: "The Little Boy Who Chose You",
-      date: "2nd Standard",
-      description:
-        "Before I knew what life was about, my innocent little heart somehow knew it wanted you. A proposal that felt so simple back then, yet became the sweetest foundation of our destiny.",
-      image: "/images/memory-01.jpg",
-      tag: "Childhood Innocence",
+      title: "The Beginning at Munduparamba School",
+      period: "2nd Standard",
+      schoolStage: "childhood",
+      tag: "AMUP Munduparamba",
+      imageType: "illustration",
+      headlineQuote: "Where two little desks became the start of a lifetime.",
+      narrative: [
+        "Nasim and Hafna's journey began at AMUP Munduparamba School. Fate seemed to weave their paths together as they found themselves in the same class from 1st standard.",
+        "In 2nd standard, their connection deepened when they were grouped together by their teacher. Hafna's remarkable talent made their team victorious in every class competition, and Nasim couldn't help but be captivated by her charm.",
+        "As his admiration grew, he started bringing sweets to express his feelings. Hafna, innocent and unaware of love, remained uninterested — but Nasim held onto his feelings.",
+      ],
+      emotionalText:
+        "Before I knew what forever meant, my little heart had already found someone special. That little girl was you, Finu. And that little boy was me.",
     },
     {
       id: 2,
       chapterNumber: 2,
-      title: "The Day Finu Said Yes",
-      date: "21 October 2019",
-      description:
-        "8th standard. The world stopped, time stood still, and my heart found its home. The moment you smiled and said yes will forever be etched in golden letters.",
-      image: "/images/memory-02.jpg",
-      tag: "The Turning Point",
+      title: "A Little Chocolate and a Friendship",
+      period: "4th — 6th Standard",
+      schoolStage: "childhood",
+      tag: "Dairy Milk Turning Point",
+      imageType: "scrapbook",
+      headlineQuote: "One sweet gesture that opened the door to our friendship.",
+      narrative: [
+        "Through 3rd, 4th, and 5th standard, Nasim continued hoping for a chance at a deeper connection with Hafna.",
+        "Finally, in 6th standard, Hafna suggested that they become friends — a sweet turning point marked by a memorable Dairy Milk chocolate exchange.",
+      ],
+      emotionalText:
+        "Sometimes the smallest moments become the memories we carry for years. One friendship, one chocolate, and a story that was only beginning.",
     },
     {
       id: 3,
       chapterNumber: 3,
-      title: "Learning What Love Means",
-      date: "Growing Years",
-      description:
-        "Love wasn't just sweet words; it was understanding each other, waiting for each other, and discovering how two different people can fit together so naturally. [ADD YOUR MEMORY HERE]",
-      image: "/images/memory-03.jpg",
-      tag: "Sweet Lessons",
+      title: "The Autograph Book Proposal",
+      period: "7th Standard Farewell",
+      schoolStage: "childhood",
+      tag: "AMUP Farewell",
+      imageType: "autograph",
+      headlineQuote: "\"I Need You, I Miss You, I Love You.\"",
+      narrative: [
+        "As the final year at AMUP Munduparamba approached, they faced the reality of moving to different schools after 7th standard. In a nostalgic gesture, Hafna shared an autograph book to collect memories.",
+        "Inside that book, Nasim poured his heart out once again with a heartfelt proposal: 'I Need You, I Miss You, I Love You.'",
+        "Both were still very young, and Hafna gently declined. Respecting her feelings, Nasim chose patience and continued cherishing the blossoming friendship between them.",
+      ],
+      emotionalText:
+        "I had already chosen you in my little heart. But I understood that your heart needed its own time.",
     },
     {
       id: 4,
       chapterNumber: 4,
-      title: "Growing Up, Growing Closer",
-      date: "Through Every Season",
-      description:
-        "Classrooms changed, years flew by, exams, life shifts, and growing responsibilities... but every step forward brought us closer together. [ADD YOUR MEMORY HERE]",
-      image: "/images/memory-04.jpg",
-      tag: "Steadfast Love",
+      title: "Choosing the Same High School",
+      period: "MMET Admission",
+      schoolStage: "school",
+      tag: "Talent Certificate Miracle",
+      imageType: "talent",
+      headlineQuote: "Determination to stay by her side.",
+      narrative: [
+        "When Hafna shared that she would be attending MMET for high school, Nasim made the bold decision to join MMET as well, determined to remain near her.",
+        "Admission wasn't straightforward — both had to take a difficult entrance exam. The day results were announced, Hafna messaged that she had failed, and Nasim confessed he hadn't cleared it either.",
+        "Yet a glimmer of hope appeared: Hafna secured admission with a Talent certificate. Encouraged by her success, Nasim tried his luck with his own Talent certificate. Miraculously, both gained admission into MMET, landing in the exact same 8th standard class!",
+      ],
+      emotionalText:
+        "Life was taking us into a new chapter, and somehow, I still hoped to be by your side.",
     },
     {
       id: 5,
       chapterNumber: 5,
-      title: "Memories That Became Ours",
-      date: "Unforgettable Days",
-      description:
-        "The shared smiles, the stolen glances, the quiet conversations, and the inside jokes that only you and your Kaakooka understand. [ADD YOUR MEMORY HERE]",
-      image: "/images/memory-05.jpg",
-      tag: "Our Secret Vault",
+      title: "The Day Finu Said Yes ❤️",
+      period: "21 October 2019",
+      schoolStage: "school",
+      tag: "Our Official Anniversary",
+      imageType: "milestone",
+      headlineQuote: "21 October 2019 — The highlight of Kaakooka's life.",
+      narrative: [
+        "In 8th standard at MMET, Hafna texted Nasim asking if he was upset because she had consistently rejected his proposals.",
+        "Nasim spoke honestly: he wasn't mad at her, but rather saddened by the continuous rejections. Hafna, understanding the depth of his enduring love, responded with warmth and finally accepted his proposal!",
+        "From that day forward, 21 October 2019 became their golden anniversary date.",
+      ],
+      emotionalText:
+        "I had waited, hoped, and held on to my feelings. Then came the day that changed our story forever. From that day, I wasn't just the boy who loved you. I became the boy whose love you accepted. Happy 7th love anniversary, Finu. Your Kaakooka still remembers.",
     },
     {
       id: 6,
       chapterNumber: 6,
-      title: "Seven Years of Choosing You",
-      date: "2019 — 2026",
-      description:
-        "Seven full years since you said yes. 2,557 days of being grateful that Hafna Sherin is in my life. Every morning I wake up glad that my heart chose you.",
-      image: "/images/memory-06.jpg",
-      tag: "Seven Golden Years",
+      title: "Growing Together at MMET",
+      period: "8th — 10th Standard",
+      schoolStage: "school",
+      tag: "High School Days",
+      imageType: "photo-placeholder",
+      photoSlot: "school/class-10",
+      headlineQuote: "Learning life, learning love, side by side.",
+      narrative: [
+        "From that day forward, they quickly became a cute couple in their school. The remaining high school years passed joyfully as they studied and grew up together at MMET.",
+        "Real photographs begin from 10th standard — capturing the smiles and moments they could finally keep.",
+      ],
+      emotionalText:
+        "We were still young, still learning about life and love. But now, we were learning it together.",
     },
     {
       id: 7,
       chapterNumber: 7,
-      title: "Our Story Is Still Going",
-      date: "Today & Forever",
-      description:
-        "This isn't just an anniversary milestone — it's just the beginning of the rest of our lives. Hand in hand, dream by dream, your Kaakooka will always be by your side.",
-      image: "/images/memory-07.jpg",
+      title: "Higher Secondary at DUHSS Panakkad",
+      period: "Class 11 & 12",
+      schoolStage: "higher-secondary",
+      tag: "DUHSS Panakkad",
+      imageType: "photo-placeholder",
+      photoSlot: "school/class-11",
+      headlineQuote: "Sharing lunches, topper & 2nd position.",
+      narrative: [
+        "Deeply committed to their journey, they applied to DUHSS Panakkad and were overjoyed to discover they were admitted to the same school and the same class!",
+        "They became inseparable: sharing lunches, supporting each other's dreams, with Hafna emerging as class topper and Nasim closely following in 2nd position.",
+        "Chocolates and gifts continued, including a special Valentine's Day love book during second year encapsulating their journey.",
+      ],
+      emotionalText:
+        "Even as we worked towards our own dreams, we were still sharing a little part of the same everyday world. From school memories to higher secondary, I was grateful that our paths continued together.",
+    },
+    {
+      id: 8,
+      chapterNumber: 8,
+      title: "Two Colleges, One Love",
+      period: "College Years",
+      schoolStage: "college",
+      tag: "Farook & Govt College",
+      imageType: "photo-placeholder",
+      photoSlot: "college",
+      headlineQuote: "Farook College & Govt College Malappuram.",
+      narrative: [
+        "After higher secondary, life took them into two different college worlds: Mohammed Nasim at Farook College, and Hafna Sherin at Government College, Malappuram.",
+        "No longer sharing the same classroom or daily routine, they learned to love and support each other through the new rhythm of college life.",
+      ],
+      emotionalText:
+        "Our everyday world changed. We no longer had the same school, the same class, or the same familiar routine. But going to different colleges did not erase what we had built together. We were learning to love each other from a distance.",
+    },
+    {
+      id: 9,
+      chapterNumber: 9,
+      title: "The Roads, The Distance, and Those Little Glances",
+      period: "Everyday Longings",
+      schoolStage: "college",
+      tag: "Glances From Afar",
+      imageType: "photo-placeholder",
+      photoSlot: "college",
+      headlineQuote: "Seeing you, even briefly, made an ordinary day special.",
+      narrative: [
+        "Even when college kept them busy and their daily paths diverged, there were moments on the roads where they saw each other from a distance.",
+        "Those long glances across the street, the silent smiles, and knowing that despite different buses and different campuses, their hearts were completely synchronized.",
+      ],
+      emotionalText:
+        "Different colleges. Different roads. Still the same two hearts. ❤️",
+    },
+    {
+      id: 10,
+      chapterNumber: 10,
+      title: "The Little Moments We Got to Keep",
+      period: "Friends' Weddings",
+      schoolStage: "college",
+      tag: "Friends' Weddings",
+      imageType: "photo-placeholder",
+      photoSlot: "friends-weddings",
+      headlineQuote: "Photographs together that became timeless treasures.",
+      narrative: [
+        "At friends' weddings, their worlds came together again in celebration.",
+        "Dressed in their finest, these gatherings gave them the precious chance to stand side-by-side and take real photographs together — tangible pieces of time they could hold onto forever.",
+      ],
+      emotionalText:
+        "After all those years of growing up, finally having photographs of us together made those moments feel even more precious.",
+    },
+    {
+      id: 11,
+      chapterNumber: 11,
+      title: "Seven Years of Choosing You",
+      period: "2019 — 2026",
+      schoolStage: "today",
+      tag: "7th Anniversary",
+      imageType: "milestone",
+      headlineQuote: "2,557 days since that beautiful 'Yes'.",
+      narrative: [
+        "Seven full years since 21 October 2019. From 8th standard kids to two young adults with college memories, road glances, and wedding snapshots.",
+        "Through every phase of life, your Kaakooka's heart has never wavered for a single second.",
+      ],
+      emotionalText:
+        "Seven years since you said yes. Seven years of choosing you every single day.",
+    },
+    {
+      id: 12,
+      chapterNumber: 12,
+      title: "Our Story Is Still Being Written",
+      period: "Today & Forever",
+      schoolStage: "today",
       tag: "Forever & Always",
+      imageType: "milestone",
+      headlineQuote: "Hand in hand towards tomorrow.",
+      narrative: [
+        "This 7th anniversary is not the finish line — it is the golden doorway to all our tomorrows.",
+        "No matter where life leads, my Finu will always have her Kaakooka by her side.",
+      ],
+      emotionalText:
+        "From that little boy who proposed in 2nd standard to your Kaakooka today... my heart still chooses you.",
     },
   ] as TimelineChapter[],
 
   // ---------------------------------------------------------------------
-  // 7. FINU'S MEMORY GALLERY (12 EDITABLE SLOTS)
+  // 7. TWO COLLEGES, ONE LOVE (DEDICATED SECTION)
+  // ---------------------------------------------------------------------
+  collegesSection: {
+    heading: "THEN LIFE TOOK US TO DIFFERENT COLLEGES...",
+    subheading: "Two campuses. Two different routines. One unbreakable bond.",
+    hisCampus: {
+      name: "Farook College",
+      person: "Mohammed Nasim (Kaakooka)",
+      details: "New campus, new schedules, but his thoughts remained with his Finu.",
+    },
+    herCampus: {
+      name: "Government College, Malappuram",
+      person: "Hafna Sherin (Finu)",
+      details: "Pursuing her degree, shining as always, holding him in her heart.",
+    },
+    narrativeParagraphs: [
+      "After higher secondary, a new chapter of life began. We went to different colleges — I went to Farook College, and my Finu went to Government College, Malappuram.",
+      "Our everyday world changed. We no longer had the same school, the same class, or the same familiar routine.",
+      "But going to different colleges did not erase what we had built together.",
+      "We were learning to love each other from a distance.",
+    ],
+  },
+
+  // ---------------------------------------------------------------------
+  // 8. THE ROADS, THE DISTANCE, AND THOSE LITTLE GLANCES ❤️
+  // ---------------------------------------------------------------------
+  glancesSection: {
+    heading: "EVEN FROM A DISTANCE, I LOOKED FOR YOU.",
+    narrative: [
+      "We went to different colleges, and our everyday lives were no longer the same.",
+      "But sometimes, on the roads, I would see you from a distance.",
+      "Those little moments. Those long glances. Seeing you, even briefly, could make an ordinary day feel special.",
+      "We didn't need a long conversation every time. Sometimes, just seeing my Finu was enough to make the moment stay in my heart.",
+    ],
+    closingQuote: "Different colleges. Different roads. Still the same two hearts. ❤️",
+  },
+
+  // ---------------------------------------------------------------------
+  // 9. MEMORIES AT FRIENDS' WEDDINGS 📸
+  // ---------------------------------------------------------------------
+  weddingsSection: {
+    heading: "THE LITTLE MOMENTS WE GOT TO KEEP.",
+    subheading: "Where our paths converged, and real photographs captured our love.",
+    narrative: [
+      "Even when college kept us busy and distance changed our everyday routine, there were moments when our paths came together.",
+      "At friends' weddings, we sometimes got to take pictures together — little pieces of time that became memories I could keep.",
+      "After all those years of growing up, finally having photographs of us together made those moments feel even more precious.",
+    ],
+    placeholderLabel: "Add our wedding memory here ❤️",
+    slots: [
+      {
+        id: 1,
+        image: "/images/friends-weddings/wedding-01.jpg",
+        caption: "Standing together at a friend's wedding ❤️",
+        date: "Special Celebration",
+      },
+      {
+        id: 2,
+        image: "/images/friends-weddings/wedding-02.jpg",
+        caption: "That joyful smile when our worlds met again",
+        date: "Wedding Day Moments",
+      },
+      {
+        id: 3,
+        image: "/images/friends-weddings/wedding-03.jpg",
+        caption: "A keepsake photograph we finally got to take together",
+        date: "Treasured Memory",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------
+  // 10. REAL PHOTO GALLERY (CATEGORIZED STARTING FROM 10TH STANDARD)
   // ---------------------------------------------------------------------
   galleryHeading: "Little Moments. Big Memories. My Favorite Person.",
   gallerySubtitle:
-    "Every photograph holds a heartbeat. Here are twelve glimpses into the beautiful story of us.",
+    "Real photographs begin from 10th standard onwards. Here are our chapters caught on camera.",
+  photoNote:
+    "Note: We do not have photos together from 2nd to 9th standard. Real photos start from Class 10!",
   gallery: [
+    // Class 10 (MMET)
     {
       id: 1,
-      image: "/images/memory-01.jpg",
-      caption: "Where our hearts learned to beat together ❤️",
-      date: "Chapter 1",
-      aspect: "portrait",
+      image: "/images/school/class-10/photo-01.jpg",
+      caption: "Class 10 at MMET — Where our real photos begin ❤️",
+      category: "class-10",
+      stageLabel: "Class 10 • MMET",
+      date: "10th Standard",
+      isRealPhoto: true,
+      description: "Our first real photographs together as a school couple.",
     },
     {
       id: 2,
-      image: "/images/memory-02.jpg",
-      caption: "21 October 2019 — The sweetest YES in history",
-      date: "21 Oct 2019",
-      aspect: "square",
+      image: "/images/school/class-10/photo-02.jpg",
+      caption: "Sweet smiles as we completed high school together",
+      category: "class-10",
+      stageLabel: "Class 10 • MMET",
+      date: "Farewell Days",
+      isRealPhoto: true,
+      description: "Wrapping up three joyful years at MMET.",
     },
+
+    // Higher Secondary Class 11 & 12 (DUHSS Panakkad)
     {
       id: 3,
-      image: "/images/memory-03.jpg",
-      caption: "That smile of yours that always melts my worries away",
-      date: "Sweet Days",
-      aspect: "portrait",
+      image: "/images/school/class-11/photo-01.jpg",
+      caption: "DUHSS Panakkad — Sharing the same class & dreams",
+      category: "class-11",
+      stageLabel: "Class 11 • Panakkad",
+      date: "+1 Higher Secondary",
+      isRealPhoto: true,
+      description: "Classroom days, shared lunches, and supporting each other.",
     },
     {
       id: 4,
-      image: "/images/memory-04.jpg",
-      caption: "Just two kids holding onto a forever promise",
-      date: "Memories",
-      aspect: "landscape",
+      image: "/images/school/class-12/photo-01.jpg",
+      caption: "Class 12 — Topper Hafna & 2nd position Nasim 🏆",
+      category: "class-12",
+      stageLabel: "Class 12 • Panakkad",
+      date: "+2 Higher Secondary",
+      isRealPhoto: true,
+      description: "Academic success and the special Valentine's storybook.",
     },
     {
       id: 5,
-      image: "/images/memory-05.jpg",
-      caption: "My favorite sight in the whole world: my Finu",
-      date: "Golden Hour",
-      aspect: "portrait",
+      image: "/images/school/class-12/photo-02.jpg",
+      caption: "A bond that had grown from childhood into forever",
+      category: "class-12",
+      stageLabel: "Class 12 • Panakkad",
+      date: "School Farewell",
+      isRealPhoto: true,
+      description: "Finishing higher secondary together.",
     },
+
+    // College Days
     {
       id: 6,
-      image: "/images/memory-06.jpg",
-      caption: "Every little walk, every little talk, everything with you",
-      date: "Cherished",
-      aspect: "square",
+      image: "/images/college/photo-01.jpg",
+      caption: "Farook College & Govt College Malappuram days",
+      category: "college",
+      stageLabel: "College Days",
+      date: "Degree Years",
+      isRealPhoto: true,
+      description: "Learning to love each other across two colleges.",
     },
     {
       id: 7,
-      image: "/images/memory-07.jpg",
-      caption: "Because your laughter is my favorite melody",
-      date: "Joyful Moments",
-      aspect: "portrait",
+      image: "/images/college/photo-02.jpg",
+      caption: "Those road glimpses and stolen glances between campuses",
+      category: "college",
+      stageLabel: "College Days",
+      date: "Road Glances",
+      isRealPhoto: true,
+      description: "Seeing my Finu from afar made every day brighter.",
     },
+
+    // Friends' Weddings
     {
       id: 8,
-      image: "/images/memory-08.jpg",
-      caption: "Seven years of inside jokes and secret smiles",
-      date: "Our World",
-      aspect: "landscape",
+      image: "/images/friends-weddings/wedding-01.jpg",
+      caption: "Friends' wedding celebrations — side by side ❤️",
+      category: "weddings",
+      stageLabel: "Friends' Weddings",
+      date: "Wedding Keepsake",
+      isRealPhoto: true,
+      description: "Moments where our paths converged in celebration.",
     },
     {
       id: 9,
-      image: "/images/memory-09.jpg",
-      caption: "The girl who holds the key to your Kaakooka's heart",
-      date: "Special",
-      aspect: "portrait",
+      image: "/images/friends-weddings/wedding-02.jpg",
+      caption: "Finally having photographs of us together to keep close",
+      category: "weddings",
+      stageLabel: "Friends' Weddings",
+      date: "Special Occasion",
+      isRealPhoto: true,
+      description: "Looking our best and celebrating love.",
     },
     {
       id: 10,
-      image: "/images/memory-10.jpg",
-      caption: "Quiet afternoons when just thinking of you brings peace",
-      date: "Serenity",
-      aspect: "square",
+      image: "/images/friends-weddings/wedding-03.jpg",
+      caption: "A timeless picture of Finu & her Kaakooka",
+      category: "weddings",
+      stageLabel: "Friends' Weddings",
+      date: "Precious Frame",
+      isRealPhoto: true,
+      description: "The moments we got to keep.",
     },
+
+    // Other Memories
     {
       id: 11,
-      image: "/images/memory-11.jpg",
-      caption: "Growing up together, one beautiful memory at a time",
-      date: "Together",
-      aspect: "portrait",
+      image: "/images/other-memories/memory-01.jpg",
+      caption: "Seven years of inside jokes and secret smiles",
+      category: "other",
+      stageLabel: "Special Milestone",
+      date: "Seven Years of Us",
+      isRealPhoto: true,
+      description: "Every single day choosing you.",
     },
     {
       id: 12,
-      image: "/images/memory-12.jpg",
+      image: "/images/other-memories/memory-02.jpg",
       caption: "To a lifetime of more memories with you, Finu ❤️",
-      date: "Forever & Ever",
-      aspect: "landscape",
+      category: "other",
+      stageLabel: "Today & Always",
+      date: "21 October 2026",
+      isRealPhoto: true,
+      description: "Happy 7th Anniversary, my favorite person!",
     },
   ] as MemoryItem[],
 
   // ---------------------------------------------------------------------
-  // 8. A LETTER FROM YOUR KAAKOOKA 💌
+  // 11. UPDATED LOVE LETTER FROM YOUR KAAKOOKA 💌
   // ---------------------------------------------------------------------
   letter: {
     envelopeTeaser: "Finu, there are things my heart wants to tell you...",
@@ -304,15 +573,17 @@ export const anniversaryContent = {
     salutation: "My dearest Finu,",
     paragraphs: [
       "Do you ever think about how our story began?",
-      "I was in 2nd standard when I proposed to you. Just a little boy with a little heart, somehow finding the courage to tell you how I felt.",
-      "And then came October 21, 2019. I was in 8th standard, and you accepted my love.",
-      "Finu, if someone had told that little boy how important this story would become to him, I wonder if he would have believed it.",
-      "Today, I am Mohammed Nasim. But to you, I am your Kaakooka. And no matter how much time passes, there is something so special about being that person in your life.",
+      "Finu, our story started when we were so little. I proposed in 2nd standard, and life took us through school, friendship, waiting, and growing up.",
+      "Then, on 21 October 2019, you said yes.",
+      "We spent our school and higher secondary years growing together. And when college took us to different places, our story entered a new chapter.",
+      "Farook College for me. Government College, Malappuram, for you.",
+      "Different everyday lives, different roads, and those little moments when I saw you from a distance.",
+      "And the photographs we sometimes took together at our friends' weddings became memories I could keep close.",
+      "Our story was never only about being in the same place. It was about all the moments that made you my Finu and me your Kaakooka.",
       "Seven years since you said yes. Seven years since that date became a part of our story.",
       "I cannot promise that every day will be perfect. But I want to keep learning, growing, laughing, and making beautiful memories with you.",
       "I want to keep choosing you, not just on anniversaries, but in the little moments that make up an ordinary day.",
       "Thank you for being my Finu.",
-      "If I could go back to that little boy in 2nd standard, I would tell him this: 'One day, the girl you are brave enough to love will become one of the most precious parts of your story. Keep that love honest. Keep your heart kind.'",
       "And if life gave me the chance to begin all over again, I would still want to find you.",
       "Happy 7th Love Anniversary, Hafna Sherin.",
       "From that little boy who proposed to you, to your Kaakooka today...",
@@ -322,7 +593,7 @@ export const anniversaryContent = {
   },
 
   // ---------------------------------------------------------------------
-  // 9. WHY I LOVE MY FINU ❤️ (7 CARDS)
+  // 12. WHY I LOVE MY FINU ❤️ (7 CARDS)
   // ---------------------------------------------------------------------
   whyILoveFinu: {
     heading: "Do You Know How Special You Are to Me?",
@@ -338,7 +609,7 @@ export const anniversaryContent = {
         id: 2,
         iconName: "Sparkles",
         title: "Because our story began when we were so little.",
-        description: "A pure childhood spark that grew into our greatest adventure.",
+        description: "From Munduparamba School classroom competitions to today.",
       },
       {
         id: 3,
@@ -350,7 +621,7 @@ export const anniversaryContent = {
         id: 4,
         iconName: "Smile",
         title: "Because you are the girl who said yes to that little boy.",
-        description: "You believed in us when we were still kids, and made me the happiest guy.",
+        description: "You believed in us and made me the happiest guy in the world.",
       },
       {
         id: 5,
@@ -362,7 +633,7 @@ export const anniversaryContent = {
         id: 6,
         iconName: "Compass",
         title: "Because I still want to create new memories with you.",
-        description: "Every tomorrow looks brighter just knowing you will be in it.",
+        description: "Through school, higher secondary, college, and every tomorrow.",
       },
       {
         id: 7,
@@ -374,7 +645,7 @@ export const anniversaryContent = {
   },
 
   // ---------------------------------------------------------------------
-  // 10. A CUTE LOVE QUIZ 🎀
+  // 13. A CUTE LOVE QUIZ 🎀
   // ---------------------------------------------------------------------
   quiz: {
     badge: "Just For My Finu 🎀",
@@ -390,13 +661,13 @@ export const anniversaryContent = {
             text: "2nd standard ❤️",
             isCorrect: true,
             response:
-              "Spot on, my Finu! 🥹 Yes, 2nd standard! Just a tiny boy with giant courage who already knew who had his heart.",
+              "Spot on, my Finu! 🥹 Yes, 2nd standard at AMUP Munduparamba! Just a tiny boy who already knew who had his heart.",
           },
           {
             text: "8th standard",
             isCorrect: false,
             response:
-              "Hehe, almost! 8th standard was when you said YES! But your Kaakooka was already head over heels proposing way back in 2nd standard! ❤️",
+              "Hehe, almost! 8th standard was when you finally said YES! But your Kaakooka was already proposing way back in 2nd standard! ❤️",
           },
           {
             text: "You are testing me 😂",
@@ -414,7 +685,7 @@ export const anniversaryContent = {
             text: "21 October 2019 ❤️",
             isCorrect: true,
             response:
-              "Yesss! 21 October 2019! 8th standard — the most beautiful date on your Kaakooka's calendar forever! 🌹✨",
+              "Yesss! 21 October 2019! 8th standard at MMET — the most beautiful date on your Kaakooka's calendar forever! 🌹✨",
           },
           {
             text: "On a random day",
@@ -458,7 +729,7 @@ export const anniversaryContent = {
   },
 
   // ---------------------------------------------------------------------
-  // 11. SECRET MESSAGE FROM YOUR KAAKOOKA (FLOATING HEART)
+  // 14. SECRET MESSAGE FROM YOUR KAAKOOKA
   // ---------------------------------------------------------------------
   secretMessage: {
     buttonTooltip: "A whisper from Kaakooka",
@@ -469,34 +740,36 @@ export const anniversaryContent = {
   },
 
   // ---------------------------------------------------------------------
-  // 12. THE FINAL CINEMATIC SURPRISE 🌹
+  // 15. UPDATED FINAL CINEMATIC SURPRISE 🌹
   // ---------------------------------------------------------------------
   finalSurprise: {
     storyRevealLines: [
-      "Once, I was just a little boy...",
-      "I proposed to a girl in 2nd standard.",
-      "Years later, in 8th standard...",
-      "On 21 October 2019, she said YES.",
-      "That girl was you, Finu.",
-      "That little boy was me.",
-      "And today...",
-      "I am still your Kaakooka.",
+      "Once, there was a little boy in 2nd standard...",
+      "Who fell for a girl named Hafna Sherin.",
+      "Through school, friendship, waiting, and growing up...",
+      "On 21 October 2019, she finally said yes.",
+      "They grew together through high school and higher secondary.",
+      "Then two different colleges brought a new kind of distance.",
+      "But even on different roads...",
+      "Even through those little glances from afar...",
+      "And in the photographs taken at friends' weddings...",
+      "His heart kept finding its way back to her.",
     ],
     bigMilestone: [
-      "7 YEARS OF US. ❤️",
-      "7 YEARS OF MY FINU.",
-      "AND I'D STILL CHOOSE YOU.",
+      "MY FINU. MY FAVORITE STORY. ❤️",
+      "Seven years since you said yes.",
+      "And I still choose you.",
     ],
     anniversarySignoff: "Happy 7th Love Anniversary, Hafna Sherin.",
-    fromLine: "From Mohammed Nasim, your Kaakooka — with all my heart.",
+    fromLine: "With all my love, your Kaakooka — Mohammed Nasim.",
     secretPromiseButton: "One Last Secret, Finu... 💌",
     secretPromiseText:
-      "My dearest Finu, my promise to you on our 7th anniversary: I promise to love you even on ordinary days, to listen when you need an ear, to celebrate your every win, and to remain the same Kaakooka who would propose to you in 2nd standard all over again. You are my home. Happy 7th Anniversary, my love! ❤️ [EDIT YOUR OWN SECRET PROMISE HERE]",
+      "My dearest Finu, my promise to you on our 7th anniversary: I promise to love you even on ordinary days, across different roads, in every crowded room, and through every new chapter. From 2nd standard at Munduparamba to Farook College and Government College, and for all our tomorrows — you are my home. Happy 7th Anniversary, my love! ❤️ [EDIT YOUR OWN SECRET PROMISE HERE]",
     replayButton: "Replay Our Story ❤️",
   },
 
   // ---------------------------------------------------------------------
-  // 13. AUDIO CONFIGURATION
+  // 16. AUDIO CONFIGURATION
   // ---------------------------------------------------------------------
   audio: {
     audioSrc: "/audio/our-song.mp3",

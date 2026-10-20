@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { OpeningSurprise } from './components/OpeningSurprise';
 import { PetalsAndHearts } from './components/PetalsAndHearts';
 import { BackgroundMusicPlayer } from './components/BackgroundMusicPlayer';
@@ -9,6 +9,8 @@ import { HeroSection } from './components/HeroSection';
 import { ChildhoodBeginning } from './components/ChildhoodBeginning';
 import { SaidYesMilestone } from './components/SaidYesMilestone';
 import { ChaptersTimeline } from './components/ChaptersTimeline';
+import { CollegeAndDistance } from './components/CollegeAndDistance';
+import { WeddingMemoriesSection } from './components/WeddingMemoriesSection';
 import { MemoryGallery } from './components/MemoryGallery';
 import { LoveLetter } from './components/LoveLetter';
 import { WhyILoveFinu } from './components/WhyILoveFinu';
@@ -55,36 +57,42 @@ export function App() {
       {/* Discreet Floating Secret Message from Kaakooka */}
       <SecretMessageModal />
 
-      {/* Main Website Content (visible once opened, or gracefully staged) */}
+      {/* Main Website Content */}
       <div className={`transition-opacity duration-1000 ${hasOpened ? 'opacity-100' : 'opacity-0'}`}>
         <RomanticNavbar />
 
         <main id="main-content">
-          {/* Hero Section */}
+          {/* 1. Hero Section */}
           <HeroSection onExploreClick={handleExploreClick} />
 
-          {/* Section 2: Childhood Beginning (2nd Standard) */}
+          {/* 2. Childhood Beginning (2nd Standard at AMUP Munduparamba) */}
           <ChildhoodBeginning />
 
-          {/* Section 3: Said Yes Milestone (21 October 2019) */}
+          {/* 3. The Day Finu Said Yes (21 October 2019 at MMET) */}
           <SaidYesMilestone />
 
-          {/* Section 4: Seven Chapters of Our Love */}
+          {/* 4. Complete 12-Chapter Real Love Timeline */}
           <ChaptersTimeline />
 
-          {/* Section 5: Finu's Memory Gallery */}
+          {/* 5. Two Colleges, One Love & The Roads Glances */}
+          <CollegeAndDistance />
+
+          {/* 6. Friends' Weddings Memories Gallery */}
+          <WeddingMemoriesSection />
+
+          {/* 7. Categorized Real Photo Gallery (10th Standard Onwards) */}
           <MemoryGallery />
 
-          {/* Section 6: Love Letter from Kaakooka */}
+          {/* 8. Love Letter from Kaakooka (with Real Journey Passage) */}
           <LoveLetter />
 
-          {/* Section 7: Why I Love My Finu */}
+          {/* 9. Why I Love My Finu */}
           <WhyILoveFinu />
 
-          {/* Section 8: Cute Love Quiz */}
+          {/* 10. Cute Love Quiz */}
           <LoveQuiz />
 
-          {/* Section 9: Final Cinematic Surprise */}
+          {/* 11. Final Cinematic Surprise (Full Journey Climax) */}
           <FinalCinematicSurprise onReplayStory={handleReplayStory} />
         </main>
 

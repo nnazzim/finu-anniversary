@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Heart, Calendar, Award, Camera } from 'lucide-react';
+import { Sparkles, Heart, Award, HeartHandshake } from 'lucide-react';
 import { anniversaryContent } from '../data/anniversaryContent';
 import { triggerRomanticConfetti } from '../utils/confetti';
 
@@ -25,7 +25,7 @@ export const SaidYesMilestone: React.FC = () => {
           <span>{content.tag}</span>
         </motion.div>
 
-        {/* Big Heading: AND THEN... YOU SAID YES. ❤️ */}
+        {/* Big Heading: THE DAY MY FINU SAID YES. ❤️ */}
         <motion.h2
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -33,7 +33,7 @@ export const SaidYesMilestone: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-cream tracking-tight mb-6 drop-shadow-lg text-glow"
         >
-          {content.heading}
+          THE DAY MY FINU SAID YES. ❤️
         </motion.h2>
 
         {/* The Glowing Date Display */}
@@ -50,7 +50,7 @@ export const SaidYesMilestone: React.FC = () => {
           
           <div className="relative px-8 sm:px-14 py-6 rounded-3xl bg-burgundy-950 border-2 border-gold/70 shadow-2xl flex flex-col items-center">
             <span className="text-xs uppercase tracking-widest text-blush font-sans mb-1 font-semibold">
-              {content.gradeBadge} • The Day Our Universe Changed
+              {content.gradeBadge} • Our Official Anniversary Date
             </span>
             <span className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-wider gold-shimmer">
               {content.date}
@@ -63,7 +63,7 @@ export const SaidYesMilestone: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Description lines */}
+        {/* Narrative lines */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -78,21 +78,39 @@ export const SaidYesMilestone: React.FC = () => {
           ))}
         </motion.div>
 
-        {/* Milestone Card & Polaroid Placeholder */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center mt-12 text-left">
-          
-          {/* Visual Milestone Card */}
+        {/* Emotional Quotes Highlight Box */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl mx-auto p-6 rounded-3xl bg-burgundy-900/60 border border-gold/30 space-y-3 mb-12 shadow-romantic"
+        >
+          {content.emotionalQuotes.map((quote, qIdx) => (
+            <p
+              key={qIdx}
+              className={`font-serif italic text-base sm:text-lg ${
+                qIdx === 2 ? 'text-gold font-bold text-lg sm:text-xl pt-1' : 'text-blush'
+              }`}
+            >
+              "{quote}"
+            </p>
+          ))}
+        </motion.div>
+
+        {/* Milestone Card */}
+        <div className="max-w-xl mx-auto text-left">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="md:col-span-7 p-8 rounded-3xl bg-gradient-to-br from-wine/40 via-burgundy-900/60 to-burgundy-950 border border-gold/30 backdrop-blur-md shadow-romantic relative overflow-hidden"
+            className="p-8 rounded-3xl bg-gradient-to-br from-wine/40 via-burgundy-900/70 to-burgundy-950 border border-gold/40 backdrop-blur-md shadow-romantic relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-wine flex items-center justify-center border border-gold/50">
-                <Heart className="w-5 h-5 text-gold fill-blush" />
+                <HeartHandshake className="w-5 h-5 text-gold" />
               </div>
               <span className="font-serif text-sm uppercase tracking-wider text-gold font-semibold">
                 Sacred Love Milestone
@@ -103,43 +121,14 @@ export const SaidYesMilestone: React.FC = () => {
               "{content.milestoneCard}"
             </p>
 
-            <div className="mt-6 pt-4 border-t border-gold/20 flex items-center justify-between text-xs text-cream/60">
+            <div className="mt-6 pt-4 border-t border-gold/20 flex items-center justify-between text-xs text-cream/70 font-sans">
               <span>Hafna Sherin (Finu)</span>
               <span>❤️</span>
               <span>Mohammed Nasim (Kaakooka)</span>
             </div>
           </motion.div>
-
-          {/* Dedicated Polaroid Photo Placeholder */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="md:col-span-5 flex justify-center"
-          >
-            <div className="w-full max-w-[280px] bg-white p-4 pt-4 pb-6 rounded-xl shadow-romantic-lg border border-stone-200 -rotate-2 hover:rotate-0 transition-transform duration-300">
-              <div className="w-full aspect-square bg-gradient-to-tr from-burgundy-900/10 to-wine/20 rounded border border-dashed border-stone-300 flex flex-col items-center justify-center p-4 text-center group cursor-pointer">
-                <div className="w-12 h-12 rounded-full bg-blush/40 flex items-center justify-center mb-2">
-                  <Camera className="w-6 h-6 text-wine" />
-                </div>
-                <p className="font-serif font-semibold text-wine text-xs sm:text-sm">
-                  {content.photoPlaceholderTitle}
-                </p>
-                <p className="text-[11px] text-stone-500 mt-1">
-                  8th standard milestone memory
-                </p>
-                <span className="mt-2 text-[10px] text-stone-400 font-mono uppercase tracking-wider bg-stone-100 px-2 py-0.5 rounded">
-                  Photo Placeholder
-                </span>
-              </div>
-              <p className="font-script text-2xl text-slate-800 mt-3 text-center">
-                21 October 2019 ❤️
-              </p>
-            </div>
-          </motion.div>
-
         </div>
+
       </div>
     </section>
   );

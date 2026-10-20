@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Sparkles, RotateCcw, Lock, Unlock, MailOpen, Crown } from 'lucide-react';
+import { Heart, Sparkles, RotateCcw, Lock, Unlock } from 'lucide-react';
 import { anniversaryContent } from '../data/anniversaryContent';
 import { triggerAnniversaryFireworks, triggerRomanticConfetti } from '../utils/confetti';
 
@@ -51,26 +51,31 @@ export const FinalCinematicSurprise: React.FC<FinalCinematicSurpriseProps> = ({
           <div className="absolute -inset-3 rounded-full border border-dashed border-gold/40 animate-spin" style={{ animationDuration: '20s' }} />
         </motion.div>
 
-        {/* Story Lines (Revealed Sequentially) */}
+        {/* Story Lines (Revealed Sequentially Line by Line) */}
         <div className="space-y-4 mb-16 max-w-2xl">
-          {final.storyRevealLines.map((line, idx) => (
-            <motion.p
-              key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.8, delay: idx * 0.2 }}
-              className={`font-serif text-xl sm:text-3xl leading-relaxed ${
-                idx === 4 || idx === 5
-                  ? 'text-blush font-bold text-2xl sm:text-4xl py-1'
-                  : idx === 7
-                  ? 'text-gold font-bold text-2xl sm:text-4xl py-1'
-                  : 'text-cream/90'
-              }`}
-            >
-              {line}
-            </motion.p>
-          ))}
+          {final.storyRevealLines.map((line, idx) => {
+            const isHighlight =
+              line.includes("21 October 2019") ||
+              line.includes("His heart kept finding its way back") ||
+              line.includes("Hafna Sherin");
+
+            return (
+              <motion.p
+                key={idx}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.8, delay: idx * 0.15 }}
+                className={`font-serif text-xl sm:text-3xl leading-relaxed ${
+                  isHighlight
+                    ? 'text-gold font-bold text-2xl sm:text-4xl py-1 gold-shimmer'
+                    : 'text-cream/90'
+                }`}
+              >
+                {line}
+              </motion.p>
+            );
+          })}
         </div>
 
         {/* Big Climax Banner */}
@@ -86,9 +91,9 @@ export const FinalCinematicSurprise: React.FC<FinalCinematicSurpriseProps> = ({
               <h3
                 key={idx}
                 className={`font-serif font-extrabold tracking-tight ${
-                  idx === 2
-                    ? 'text-3xl sm:text-5xl lg:text-6xl gold-shimmer text-glow mt-4'
-                    : 'text-3xl sm:text-5xl text-cream'
+                  idx === 0
+                    ? 'text-3xl sm:text-5xl lg:text-6xl gold-shimmer text-glow'
+                    : 'text-2xl sm:text-4xl text-cream'
                 }`}
               >
                 {text}

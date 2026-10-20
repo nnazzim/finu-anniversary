@@ -163,7 +163,9 @@ export const LoveLetter: React.FC = () => {
 
                     const isHighlight =
                       para.includes("My heart still chooses you") ||
-                      para.includes("Happy 7th Love Anniversary");
+                      para.includes("Happy 7th Love Anniversary") ||
+                      para.includes("Farook College for me") ||
+                      para.includes("Our story was never only about being in the same place");
 
                     return (
                       <motion.p
