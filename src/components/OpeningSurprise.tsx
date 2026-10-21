@@ -34,6 +34,7 @@ export const OpeningSurprise: React.FC<OpeningSurpriseProps> = ({ onOpen }) => {
   const handleOpenClick = () => {
     setIsOpening(true);
     triggerRomanticConfetti();
+    window.dispatchEvent(new CustomEvent('start-romantic-music'));
     setTimeout(() => {
       onOpen();
     }, 1200);
@@ -145,7 +146,10 @@ export const OpeningSurprise: React.FC<OpeningSurpriseProps> = ({ onOpen }) => {
         {/* Skip button for quick review if desired */}
         {stage < 4 && (
           <button
-            onClick={() => setStage(4)}
+            onClick={() => {
+              setStage(4);
+              window.dispatchEvent(new CustomEvent('start-romantic-music'));
+            }}
             className="absolute bottom-3 right-4 text-[11px] text-cream/40 hover:text-cream/80 transition-colors uppercase tracking-widest"
           >
             Skip Intro →

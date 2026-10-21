@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Volume2, VolumeX, Music, Disc3, Sparkles } from 'lucide-react';
 import { anniversaryContent } from '../data/anniversaryContent';
 import { romanticSynth } from '../utils/romanticSynth';
@@ -12,6 +12,25 @@ export const BackgroundMusicPlayer: React.FC = () => {
 
   const audioSrc = anniversaryContent.audio.audioSrc;
 
+  // Safe play helper
+  const startPlaying = useCallback(async () => {
+    if (audioRef.current && !isUsingSynth) {
+      try {
+        audioRef.current.volume = 0.75;
+        await audioRef.current.play();
+        setIsPlaying(true);
+        return true;
+      } catch (err) {
+        console.warn("Audio autoplay blocked or waiting for user gesture:", err);
+        return false;
+      }
+    } else {
+      romanticSynth.start();
+      setIsPlaying(true);
+      return true;
+    }
+  }, [isUsingSynth]);
+
   // Handle toggling play / pause
   const togglePlay = async () => {
     if (isPlaying) {
@@ -23,18 +42,10 @@ export const BackgroundMusicPlayer: React.FC = () => {
       setIsPlaying(false);
     } else {
       // Play
-      if (audioRef.current && !isUsingSynth) {
-        try {
-          await audioRef.current.play();
-          setIsPlaying(true);
-        } catch (err) {
-          // If the audio file fails (e.g., 404 or missing mp3), fallback to built-in romantic synth!
-          console.warn("Audio file could not be played, falling back to romantic music box synthesizer:", err);
-          setIsUsingSynth(true);
-          romanticSynth.start();
-          setIsPlaying(true);
-        }
-      } else {
+      const success = await startPlaying();
+      if (!success && !isUsingSynth) {
+        // Fallback to synth if audio completely fails
+        setIsUsingSynth(true);
         romanticSynth.start();
         setIsPlaying(true);
       }
@@ -53,11 +64,47 @@ export const BackgroundMusicPlayer: React.FC = () => {
     setIsMuted(!isMuted);
   };
 
+  // Autoplay as soon as website opens or on first user interaction
   useEffect(() => {
+    let hasStarted = false;
+
+    const attemptAutoplay = async () => {
+      if (hasStarted) return;
+      const started = await startPlaying();
+      if (started) {
+        hasStarted = true;
+        cleanupListeners();
+      }
+    };
+
+    const handleFirstGesture = async () => {
+      if (hasStarted) return;
+      await startPlaying();
+      hasStarted = true;
+      cleanupListeners();
+    };
+
+    const cleanupListeners = () => {
+      window.removeEventListener('click', handleFirstGesture);
+      window.removeEventListener('touchstart', handleFirstGesture);
+      window.removeEventListener('keydown', handleFirstGesture);
+      window.removeEventListener('start-romantic-music', handleFirstGesture);
+    };
+
+    // 1. Try immediate autoplay
+    attemptAutoplay();
+
+    // 2. Fallback on any user touch/click/event
+    window.addEventListener('click', handleFirstGesture, { once: true });
+    window.addEventListener('touchstart', handleFirstGesture, { once: true });
+    window.addEventListener('keydown', handleFirstGesture, { once: true });
+    window.addEventListener('start-romantic-music', handleFirstGesture);
+
     return () => {
+      cleanupListeners();
       romanticSynth.stop();
     };
-  }, []);
+  }, [startPlaying]);
 
   return (
     <div className="fixed bottom-5 left-5 z-40">
@@ -98,11 +145,11 @@ export const BackgroundMusicPlayer: React.FC = () => {
 
           <div className="text-left hidden sm:block">
             <p className="text-xs font-serif font-semibold text-cream leading-tight">
-              {isPlaying ? "Our Song Playing" : "Play Our Music"}
+              {isPlaying ? anniversaryContent.audio.trackTitle : "Play Our Music"}
             </p>
             <p className="text-[10px] text-blush/80 flex items-center gap-1">
               <Sparkles className="w-2.5 h-2.5 text-gold" />
-              {isUsingSynth ? "Music Box Melody" : "For Finu & Kaakooka"}
+              {isUsingSynth ? "Music Box Melody" : anniversaryContent.audio.artist}
             </p>
           </div>
         </button>
@@ -122,12 +169,12 @@ export const BackgroundMusicPlayer: React.FC = () => {
         <div className="absolute bottom-14 left-0 w-56 bg-burgundy-950/95 border border-gold/40 p-2.5 rounded-lg text-xs text-cream/90 shadow-romantic-lg pointer-events-none">
           <p className="font-semibold text-gold flex items-center gap-1">
             <Music className="w-3.5 h-3.5" />
-            Romantic Melody
+            {anniversaryContent.audio.trackTitle}
           </p>
           <p className="mt-1 text-[11px] text-cream/80">
             {isUsingSynth
-              ? "Playing ambient lullaby chime. Drop your own 'our-song.mp3' in public/audio/ anytime!"
-              : "Playing your personalized love song for this special anniversary."}
+              ? "Playing ambient lullaby chime."
+              : "Playing your special romantic song for Finu ❤️"}
           </p>
         </div>
       )}

@@ -773,7 +773,7 @@ export const anniversaryContent = {
   // ---------------------------------------------------------------------
   audio: {
     audioSrc: "/audio/our-song.mp3",
-    trackTitle: "Our Love Theme (Kaakooka & Finu)",
-    artist: "Ambient Romantic Melody",
+    trackTitle: "Mazhaville — Our Love Song",
+    artist: "Kaakooka & Finu ❤️",
   },
 };
